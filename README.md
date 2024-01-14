@@ -8,6 +8,9 @@
 #### 4.OpenCV
 
 ## Connect To Database
+
+
+
 ```bash
 mysql -u root -p (for localhost)
 ```
@@ -23,5 +26,10 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
+
+https://github.com/chin-holla/EyeWander/assets/118543699/f58b6fe8-c35c-48ba-bd71-ad3dc598b36e
+
+
+
 
 ### for more information, Read [Flask Documentation](https://flask.palletsprojects.com/en/3.0.x/api/).

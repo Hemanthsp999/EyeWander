@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="Travelix Project" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+
+       
     <link
       rel="stylesheet"
       type="text/css"
@@ -98,7 +101,7 @@
             <div class="menu_close"></div>
           </div>
           <div class="logo menu_logo">
-            <a href="#"><img src="static/img/varanasi.jpg" alt="" /></a>
+            <a href="#"><img src="static/images/varanasi.jpg" alt="" /></a>
           </div>
           <ul>
             <li class="menu_item"><a href="#">HOME</a></li>
@@ -132,11 +135,12 @@
                 >
                   <h1>Search</h1>
                   <h1>by image</h1>
+                  <div id="LiveLocation"></div>
                   <div class="button home_slider_button">
                     <div class="button_bcg"></div>
-                    <a href="{{url_for('image')}}"
-                      >Go<span></span><span></span><span></span
-                    ></a>
+                    <a href="{{url_for('image')}}" 
+                      >Go
+                    </a>
                   </div>
                 </div>
               </div>
@@ -240,7 +244,7 @@
                 <!-- Image by https://unsplash.com/@hellolightbulb -->
                 <div
                   class="intro_item_background top-image"
-                  style="background-image: url(static/images/manali.jpg)"
+                  style="background-image: url(static/images/manqli.jpg)"
                 ></div>
                 <div
                   class="intro_item_content d-flex flex-column align-items-center justify-content-center"
@@ -370,21 +374,27 @@
       <!-- CTA -->
 
       <!-- Testimonials -->
-
+<!--
+     ******REMOVE CONTACT IMAGE WHICH IS NOT REQUIRED*********
       <div class="contact">
         <div
           class="contact_background"
           style="background-image: url(static/images/contact.png)"
         ></div>
 
+        ********COMMENT SECTION ENDS HERE*********
+-->
+
         <div class="container">
           <div class="row">
             <div class="col-lg-5">
-              <div class="contact_image"></div>
+              <div class=""></div>
             </div>
+            <!--
+               ******REMOVED FEEDBACK FORM*******
             <div class="col-lg-7">
               <div class="contact_form_container">
-                <div class="contact_title">get in touch</div>
+                <div class="">get in touch</div>
                 <form
                   action="{{url_for('send_message')}}"
                   id="contact_form"
@@ -438,6 +448,10 @@
                 </form>
               </div>
             </div>
+
+
+            ******COMMENT SECTION ENDS HERE*********
+          -->
           </div>
         </div>
       </div>
@@ -448,7 +462,7 @@
         <div class="container">
           <div class="row">
             <!-- Footer Column -->
-            <div class="col-lg-20 footer_column">
+            <div class="col-lg-20 footer_column" style="justify-items: center;">
               <div class="footer_col">
                 <div class="footer_content footer_about">
                   <div class="logo_container footer_logo">
@@ -457,10 +471,14 @@
                         ><img src="static/images/logo.png" alt="" />Travel</a
                       >
                     </div>
+                    <div style="font-weight: bold; font-size: 1.5vmax; color: white; margin-left: 20px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">About</div>
+                    <div style="font-weight: bold; font-size: 1.5vmax; color: white; ">ContactUs</div>
+
                   </div>
                 </div>
               </div>
             </div>
+           
 
             <!-- Footer Column -->
 
@@ -484,6 +502,46 @@
         </div>
       </div>
     </div>
+    <script>
+      const x = document.getElementById("LiveLocation");
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(showPosition, showError);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        x.innerHTML =
+          "Latitude: " +
+          position.coords.latitude +
+          "<br>Longitude: " +
+          position.coords.longitude;
+          console.log(position.coords.latitude,position.coords.latitude)
+      }
+      console.log(showPosition);
+
+      function showError(error) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable.";
+            break;
+          case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out.";
+            break;
+          case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred.";
+            break;
+        }
+      }
+
+      getLocation();
+    </script>
 
     <script src="static/js/jquery-3.2.1.min.js"></script>
     <script src="static/styles/bootstrap4/popper.js"></script>
