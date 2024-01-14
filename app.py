@@ -19,16 +19,14 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ec830e5ae057c5b08f5a435a7b13e891'
 
 # Config MySQL
-app.config['MYSQL_DATABASE_HOST'] = "localhost"
+#app.config['MYSQL_DATABASE_HOST'] = "localhost"
 # app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = '@localhost'
-app.config['MYSQL_DATABASE_DB'] = 'myflaskapp'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+#app.config['MYSQL_DATABASE_PASSWORD'] = '@localhost'
+#app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # init MYSQL
-mysql = MySQL(app)
-mysql.init_app(app)
+#mysql.init_app(app)
 
+user_data = {}
 
 @app.route('/')
 def main():
@@ -85,12 +83,11 @@ def reg():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    if (cursor.execute("INSERT INTO users(user_name,user_id, password) VALUES(%s,%s,%s)", ('2', '1', '1'))):
-        print("data gone")
-        conn.commit()
-        cursor.close()
+    user_name = '2'
+    user_id = '1'
+    password = '1'
+
+    user_data[user_id] = {'user_name': user_name, 'password': password}
 
     return 'data inserted'
 
@@ -106,25 +103,17 @@ def login():
             user_name = request.form['user_name']
             password = request.form['password']
 
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            result = cursor.execute(
-                "SELECT * FROM users WHERE user_name = %s", [user_name])
-            print(result)
-            if result > 0:
-                data = cursor.fetchone()
-                if password == data[3]:
+            for user_id, user_info in user_data.items():
+                if user_info['user_name'] == user_name and user_info['password'] == password:
                     session['logged_in'] = True
                     session['username'] = user_name
-                    session['user_id'] = data[2]
+                    session['user_id'] = user_id
                     flash('You are now logged in', 'success')
                     return redirect(url_for('main'))
-            cursor.close()
-
+        flash('Invalid credentials,please try again later','danger')
         return render_template('login.html')
 
 # Check if user logged in
-
 
 def is_logged_in(f):
     @wraps(f)
